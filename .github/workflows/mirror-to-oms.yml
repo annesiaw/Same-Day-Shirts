@@ -1,0 +1,19 @@
+name: Mirror Order Studio to Order-Management-System
+
+on:
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push order-studio subtree to Order-Management-System
+        run: |
+          git config user.email "noreply@github.com"
+          git config user.name "GitHub Actions"
+          git remote add oms https://x-access-token:${{ secrets.OMS_TOKEN }}@github.com/annesiaw/Order-Management-System.git
+          git subtree push --prefix=order-studio oms master
